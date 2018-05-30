@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { JsonsService } from '../jsons.service';
+import { JsonFile } from '../json-file';
 
 @Component({
   selector: 'app-child-b-table',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChildBTableComponent implements OnInit {
 
-  constructor() { }
+  constructor(private jsonsService: JsonsService) { }
+  jsonsListA: JsonFile[];
 
   ngOnInit() {
+    this.getListelemants();
   }
-
+getListelemants() {
+  this.jsonsService.getJSON().subscribe(
+    res => {this.jsonsListA = res; console.log(' child-b : JSON.stringify(res) = ' + JSON.stringify(res)); },
+    err => {console.log(' child-b : err = ' + err); }
+  );
+}
 }
